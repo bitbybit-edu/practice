@@ -1,4 +1,4 @@
-package com.bitbybit.practice.queue;
+package com.bitbybit.practice.collection.queue;
 
 import java.util.Objects;
 import java.util.PriorityQueue;

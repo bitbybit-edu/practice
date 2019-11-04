@@ -1,4 +1,4 @@
-package com.bitbybit.practice.collection;
+package com.bitbybit.practice.collection.list;
 
 import java.util.LinkedList;
 import java.util.logging.Logger;
