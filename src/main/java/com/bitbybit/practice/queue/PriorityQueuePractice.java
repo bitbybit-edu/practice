@@ -2,6 +2,7 @@ package com.bitbybit.practice.queue;
 
 import java.util.Objects;
 import java.util.PriorityQueue;
+import java.util.Random;
 import java.util.logging.Logger;
 
 /**
@@ -14,10 +15,14 @@ public class PriorityQueuePractice {
     private static final Logger logger = Logger.getLogger(PriorityQueuePractice.class.getSimpleName());
 
     public static void main(String[] args) {
-        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(100);
-        int forCount = 100;
+        int forCount = 1 << 3;
+        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>(forCount);
+
+        int bound = 100;
+        Random random = new Random(47);
         for (int i = forCount; i > 0; i--) {
-            priorityQueue.add(i);
+            int element = random.nextInt(bound);
+            priorityQueue.add(element);
         }
 
         logger.info(priorityQueue.toString());
