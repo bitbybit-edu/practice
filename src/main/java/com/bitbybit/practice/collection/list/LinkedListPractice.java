@@ -11,13 +11,24 @@ public class LinkedListPractice {
     private final static Logger logger = Logger.getLogger(LinkedListPractice.class.getSimpleName());
 
     public static void main(String[] args) {
-        int forCount = 100;
-        LinkedList<Integer> integers = new LinkedList<Integer>();
+        int forCount = 10;
+        LinkedList<Integer> linkedList = new LinkedList<Integer>();
+        LinkedList<Integer> linkedListStack = new LinkedList<>();
         for (int i = 0; i < forCount; i++) {
-            integers.add(i);
+            linkedList.add(i);
+            linkedListStack.push(i);
+        }
+        logger.info(linkedList.toString());
+        logger.info(linkedListStack.toString());
+
+        for (int i = 0; i < forCount; i++) {
+            Integer poll = linkedList.poll();
+            logger.info("poll====" + poll);
+
+            Integer pop = linkedListStack.pop();
+            logger.info("pop====" + pop);
         }
 
-        logger.info(integers.toString());
     }
 
 
