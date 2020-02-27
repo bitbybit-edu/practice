@@ -14,12 +14,21 @@ public class ComplexString {
         return 0;
     }
 
+    /**
+     * 这种方法可以解题　　　但是会 head memory 溢出
+     * @param s1
+     * @param s2
+     * @param a
+     * @return
+     */
     public static int solution(String s1, String s2, int a) {
-        if (s1.length() > s2.length()) {
+        int length1 = s1.length();
+        int length2 = s2.length();
+        if (length1 > length2) {
             s1 = s1.substring(1);
-        } else if (s2.length() > s1.length()) {
+        } else if (length2 > length1) {
             s2 = s2.substring(1);
-        } else if (s1.length() == s2.length()) {
+        } else if (length1 == length2) {
             if (s1.equals(s2)) {
                return a;
             } else {
