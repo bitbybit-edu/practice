@@ -12,7 +12,7 @@ public class CallableTestDemo {
         new Thread(futureTask).start();
         new Thread(futureTask).start();
         String s = futureTask.get();
-        System.out.println(s);
+        System.out.println(s);;
     }
 }
 
