@@ -26,11 +26,12 @@ public class MyRunnable implements Runnable {
             }
 
             if (i > 3 && !Objects.isNull(brotherThread)) {
-                try {
-                    brotherThread.join();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                Thread.yield();
+//                try {
+//                    brotherThread.join();
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
             }
 
             System.out.println("线程" + thread.getName() + "执行中:x======" + i);
