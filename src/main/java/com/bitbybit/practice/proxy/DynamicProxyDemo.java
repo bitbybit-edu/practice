@@ -17,19 +17,19 @@ public class DynamicProxyDemo {
     }
 }
 
-class BeforeAfterInvocationHandler implements InvocationHandler {
+class BeforeAfterInvocationHandler<T> implements InvocationHandler {
 
-    private Object object;
+    private T t;
 
-    public BeforeAfterInvocationHandler(Object object){
-        this.object = object;
+    public BeforeAfterInvocationHandler(T t) {
+        this.t = t;
     }
 
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         System.out.println("----before----");
-        Object invoke = method.invoke(object, args);
+        Object invoke = method.invoke(t, args);
         System.out.println("----after----");
         return invoke;
     }
