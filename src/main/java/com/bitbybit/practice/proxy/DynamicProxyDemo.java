@@ -12,7 +12,10 @@ import java.lang.reflect.Proxy;
 public class DynamicProxyDemo {
     public static void main(String[] args) {
         ServiceInterface serviceInterfaceImpl = new ServiceInterfaceImpl();
-        ServiceInterface serviceInterface = (ServiceInterface) Proxy.newProxyInstance(serviceInterfaceImpl.getClass().getClassLoader(), ServiceInterfaceImpl.class.getInterfaces(), new BeforeAfterInvocationHandler(serviceInterfaceImpl));
+        ClassLoader classLoader = serviceInterfaceImpl.getClass().getClassLoader();
+        Class<?>[] interfaces = ServiceInterfaceImpl.class.getInterfaces();
+        BeforeAfterInvocationHandler beforeAfterInvocationHandler = new BeforeAfterInvocationHandler(serviceInterfaceImpl);
+        ServiceInterface serviceInterface = (ServiceInterface) Proxy.newProxyInstance(classLoader, interfaces, beforeAfterInvocationHandler);
         serviceInterface.doSomething();
     }
 }
