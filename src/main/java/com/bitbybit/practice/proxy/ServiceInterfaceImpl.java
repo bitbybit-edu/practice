@@ -2,6 +2,8 @@ package com.bitbybit.practice.proxy;
 
 /**
  * 服务接口具体实现
+ *
+ * @author liulin
  */
 public class ServiceInterfaceImpl implements ServiceInterface {
 
