@@ -15,8 +15,8 @@ public class DynamicProxyDemo {
         ClassLoader classLoader = serviceInterfaceImpl.getClass().getClassLoader();
         Class<?>[] interfaces = ServiceInterfaceImpl.class.getInterfaces();
         BeforeAfterInvocationHandler beforeAfterInvocationHandler = new BeforeAfterInvocationHandler(serviceInterfaceImpl);
-        ServiceInterface serviceInterface = (ServiceInterface) Proxy.newProxyInstance(classLoader, interfaces, beforeAfterInvocationHandler);
-        serviceInterface.doSomething();
+        ServiceInterface serviceInterfaceProxy = (ServiceInterface) Proxy.newProxyInstance(classLoader, interfaces, beforeAfterInvocationHandler);
+        serviceInterfaceProxy.doSomething();
     }
 }
 
