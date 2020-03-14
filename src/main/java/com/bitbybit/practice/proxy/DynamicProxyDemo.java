@@ -28,7 +28,6 @@ class BeforeAfterInvocationHandler<T> implements InvocationHandler {
         this.t = t;
     }
 
-
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         System.out.println("----before----");
