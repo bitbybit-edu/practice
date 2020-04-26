@@ -13,9 +13,9 @@ import java.util.concurrent.TimeUnit;
 public class ThreadPoolExecutorTest {
 
     public static void main(String[] args) {
-        Integer corePoolSize = 1;
-        Integer maximumPoolSize = 2;
-        Long keepAliveTime = 10L;
+        int corePoolSize = 1;
+        int maximumPoolSize = 2;
+        long keepAliveTime = 10L;
         TimeUnit timeUnit = TimeUnit.SECONDS;
         ArrayBlockingQueue<Runnable> arrayBlockingQueue = new ArrayBlockingQueue<>(6);
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(corePoolSize, maximumPoolSize, keepAliveTime,
