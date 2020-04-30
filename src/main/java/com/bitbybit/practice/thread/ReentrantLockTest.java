@@ -1,5 +1,6 @@
 package com.bitbybit.practice.thread;
 
+import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.RejectedExecutionHandler;
@@ -22,7 +23,7 @@ public class ReentrantLockTest {
         final int maxPoolSize = Integer.MAX_VALUE;
         final long keepAliveTime = 0L;
         final TimeUnit timeUnit = TimeUnit.MILLISECONDS;
-        final BlockingQueue<Runnable> blockingDeque = new ArrayBlockingQueue<Runnable>(1 << 4);
+        final BlockingQueue<Runnable> blockingDeque = new ArrayBlockingQueue<>(1 << 4);
         final RejectedExecutionHandler rejectedExecutionHandler = new ThreadPoolExecutor.AbortPolicy();
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(corePoolSize, maxPoolSize, keepAliveTime, timeUnit, blockingDeque, rejectedExecutionHandler);
 //        a(threadPoolExecutor);red
@@ -52,11 +53,7 @@ public class ReentrantLockTest {
         });
 
         threadPoolExecutor.execute(() -> {
-            resourceCompete.sub();
-        });
-
-        threadPoolExecutor.execute(() -> {
-            resourceCompete.red();
+            resourceCompete.read();
         });
         threadPoolExecutor.shutdown();
     }
@@ -126,16 +123,15 @@ class ResourceCompeteLock {
 
     private static final Logger logger = Logger.getLogger("com.bitbybit.practice.thread.Resource");
 
-    Lock lock = new ReentrantLock();
+    ReentrantLock lock = new ReentrantLock();
 
     private Integer total = 50;
-
     public void sub() {
         lock.lock();
         try {
             while (total > 0) {
                 try {
-                    Thread.sleep((long) (Math.random() * 200));
+                    Thread.sleep((long) (new Random().nextFloat() * 500));
                 } catch (Exception e) {
 
                 }
@@ -154,15 +150,17 @@ class ResourceCompeteLock {
     /**
      * 无lock锁 读和写不竞争
      */
-    public void red() {
+    public void read() {
 
         while (total > 0) {
-//            try {
-//                Thread.sleep((long) (Math.random() * 200));
-//            } catch (Exception e) {
-//
-//            }
+            logger.info("holdCount = " + lock.getHoldCount() + ",queueLength = " + lock.getQueueLength());
             logger.info("thread = " + Thread.currentThread().getName() + ", 读取操作： total = " + total);
+
+            try {
+                Thread.sleep((long) (new Random().nextFloat() * 500));
+            } catch (Exception e) {
+
+            }
         }
 
     }
