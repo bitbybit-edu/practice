@@ -7,8 +7,8 @@ public class LoggerTest {
 
     private static final Logger logger = LoggerFactory.getLogger(LoggerTest.class);
 
-
     public static void main(String[] args) {
         logger.info("test logger");
+        logger.error("test logger");
     }
 }
