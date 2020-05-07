@@ -1,5 +1,8 @@
 package com.bitbybit.practice.thread;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -8,7 +11,6 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.logging.Logger;
 
 /**
  * ReentrantLock 测试类
@@ -26,8 +28,30 @@ public class ReentrantLockTest {
         final BlockingQueue<Runnable> blockingDeque = new ArrayBlockingQueue<>(1 << 4);
         final RejectedExecutionHandler rejectedExecutionHandler = new ThreadPoolExecutor.AbortPolicy();
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(corePoolSize, maxPoolSize, keepAliveTime, timeUnit, blockingDeque, rejectedExecutionHandler);
-//        a(threadPoolExecutor);red
-        b(threadPoolExecutor);
+//        a(threadPoolExecutor);
+//        b(threadPoolExecutor);
+        c(threadPoolExecutor);
+    }
+
+    private static void c(ThreadPoolExecutor threadPoolExecutor) {
+        ResourceTryLock resourceTryLock = new ResourceTryLock();
+        threadPoolExecutor.execute(() -> {
+            resourceTryLock.sub();
+        });
+
+        threadPoolExecutor.execute(() -> {
+            resourceTryLock.sub();
+        });
+
+        threadPoolExecutor.execute(() -> {
+            resourceTryLock.sub();
+        });
+
+        threadPoolExecutor.execute(() -> {
+            resourceTryLock.read();
+        });
+
+        threadPoolExecutor.shutdown();
     }
 
     /**
@@ -95,7 +119,7 @@ public class ReentrantLockTest {
  */
 class ResourceCompete {
 
-    private static final Logger logger = Logger.getLogger("com.bitbybit.practice.thread.Resource");
+    private static final Logger logger = LoggerFactory.getLogger(ResourceCompete.class);
 
     Lock lock = new ReentrantLock();
 
@@ -121,11 +145,12 @@ class ResourceCompete {
 
 class ResourceCompeteLock {
 
-    private static final Logger logger = Logger.getLogger("com.bitbybit.practice.thread.Resource");
+    private static final Logger logger = LoggerFactory.getLogger(ResourceCompeteLock.class);
 
     ReentrantLock lock = new ReentrantLock();
 
     private Integer total = 50;
+
     public void sub() {
         lock.lock();
         try {
@@ -165,5 +190,59 @@ class ResourceCompeteLock {
 
     }
 
+}
+
+class ResourceTryLock {
+
+    private static final Logger logger = LoggerFactory.getLogger(ResourceTryLock.class);
+
+    ReentrantLock reentrantLock = new ReentrantLock();
+
+    private Integer total = 10;
+
+    public void sub() {
+        String name = Thread.currentThread().getName();
+
+        try {
+            if (reentrantLock.tryLock(5L, TimeUnit.SECONDS)) {
+                try {
+                    while (total > 0) {
+                        Thread.sleep((long) (new Random().nextFloat() * 5000));
+                        total = total - 1;
+                        logger.info("thread = {}, 减法操作：total = {}", name, total);
+                    }
+                } catch (Exception e) {
+
+                } finally {
+                    reentrantLock.unlock();
+                }
+
+            } else {
+                logger.info("thread = {}, 未获取锁", name);
+            }
+
+        } catch (Exception e) {
+            logger.error("thread = {}", name, e);
+        }
+
+
+    }
+
+    /**
+     * 无lock锁 读和写不竞争
+     */
+    public void read() {
+        String name = Thread.currentThread().getName();
+        while (total > 0) {
+            logger.info("thread = {}, 读取操作： total = {}", name, total);
+
+            try {
+                Thread.sleep((long) (new Random().nextFloat() * 5000));
+            } catch (Exception e) {
+
+            }
+        }
+
+    }
 }
 
