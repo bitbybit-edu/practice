@@ -5,6 +5,9 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.FutureTask;
 
+/**
+ * @author liulin
+ */
 public class CallableTestDemo {
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         FutureTask<String> futureTask = new FutureTask<>(new MyCallable());
@@ -16,7 +19,7 @@ public class CallableTestDemo {
     }
 }
 
-class MyCallable<String> implements Callable<java.lang.String> {
+class MyCallable implements Callable<String> {
 
     @Override
     public java.lang.String call() throws Exception {
@@ -24,5 +27,3 @@ class MyCallable<String> implements Callable<java.lang.String> {
         return "线程执行完成" + Thread.currentThread().getName();
     }
 }
-
-
