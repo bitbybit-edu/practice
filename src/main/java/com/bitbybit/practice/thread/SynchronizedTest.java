@@ -1,7 +1,5 @@
 package com.bitbybit.practice.thread;
 
-
-import java.util.Random;
 import java.util.logging.Logger;
 
 /**
@@ -144,7 +142,7 @@ public class SynchronizedTest {
  */
 class Example {
     Logger logger = Logger.getLogger("com.bitbybit.practice.thread.Example");
-
+    private Integer total = 200;
     public void execute() {
         for (int i = 0; i < 10; i++) {
             try {
