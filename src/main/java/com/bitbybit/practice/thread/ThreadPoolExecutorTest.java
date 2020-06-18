@@ -1,6 +1,7 @@
 package com.bitbybit.practice.thread;
 
 import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.RejectedExecutionException;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -15,6 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ThreadPoolExecutorTest {
 
     public static void main(String[] args) {
+
         int corePoolSize = 2;
         int maximumPoolSize = 2;
         long keepAliveTime = 10L;
@@ -43,6 +45,17 @@ public class ThreadPoolExecutorTest {
 
             }
         });
+        threadPoolExecutor.execute(() -> {
+            try {
+                System.out.println(Thread.currentThread().getName() + "正在执行");
+                long sleep = 20 * 1000L;
+                Thread.sleep(sleep);
+                System.out.println(Thread.currentThread().getName() + ":sleep=" + sleep + "执行完成");
+            } catch (Exception e) {
+
+            }
+        });
+
         threadPoolExecutor.execute(() -> {
             try {
                 System.out.println(Thread.currentThread().getName() + "正在执行");

@@ -15,3 +15,8 @@ buildNumber.properties
 .idea
 *.iml
 log
+.vscode/settings.json
+.classpath
+.gitignore
+.project
+.settings/*
