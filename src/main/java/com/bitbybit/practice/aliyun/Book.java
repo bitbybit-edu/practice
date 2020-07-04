@@ -27,7 +27,7 @@ public class Book {
             bookString += random.nextInt(2);
         }
         logger.info("bookString = {}", bookString);
-
+        solution("ABABAABABBABABABABBABABBAABBABABB");
     }
 
     public static int solution(String str) {
@@ -36,11 +36,12 @@ public class Book {
         int bNum = 0;
         for (char c : chars) {
             if (c == 'A') {
-                aNum ++;
-            }else {
-                bNum ++;
+                aNum++;
+            } else {
+                bNum++;
             }
         }
-        return Math.min(aNum,bNum) * 2;
+        logger.info("result = {}", Math.min(aNum, bNum) * 2);
+        return Math.min(aNum, bNum) * 2;
     }
 }
