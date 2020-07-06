@@ -3,6 +3,7 @@ package com.bitbybit.practice.sort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -15,13 +16,14 @@ public class QuickSort {
     private static final Logger logger = LoggerFactory.getLogger(QuickSort.class);
 
     public static void main(String[] args) {
+
         Random random = new Random(47);
 
         int[] array = new int[10];
         for (int i = 0; i < array.length; i++) {
             array[i] = random.nextInt(100);
         }
-
+        
         logger.info("初始化数组： array = {}", array);
 
         quickSortAsc(array, 0, array.length - 1);
