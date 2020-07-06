@@ -20,13 +20,6 @@ public class Book {
     public static final Logger logger = LoggerFactory.getLogger(Book.class);
 
     public static void main(String[] args) {
-        Random random = new Random(47);
-        String bookString = "";
-        for (int i = 0; i < 10; i++) {
-
-            bookString += random.nextInt(2);
-        }
-        logger.info("bookString = {}", bookString);
         solution("ABABAABABBABABABABBABABBAABBABABB");
     }
 
