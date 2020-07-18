@@ -45,4 +45,14 @@ public class PowerTwo {
         logger.info("{}", n - tags.size());
 
     }
+
+    public void test2(String content) {
+        logger.info("say {}", content);
+    }
+
+    public void test1() {
+
+    }
+
+
 }
