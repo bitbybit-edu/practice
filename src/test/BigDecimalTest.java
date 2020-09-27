@@ -14,5 +14,10 @@ public class BigDecimalTest {
         aList.add("4");
         List<String> collect = aList.stream().filter(item -> item.equals("1")).collect(Collectors.toList());
         System.out.println(collect);
+
+        BigDecimal bigDecimal = new BigDecimal(0);
+        BigDecimal add = bigDecimal.add(new BigDecimal(1));
+        System.out.println(bigDecimal);
+        System.out.println(add);
     }
 }
