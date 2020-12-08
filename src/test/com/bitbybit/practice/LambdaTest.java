@@ -51,7 +51,6 @@ public class LambdaTest {
         Map<String, Simple> collect1 = collect.stream().collect(Collectors.toMap(s -> s.simple, v -> v));
         collect1.forEach((k,v) -> System.out.println(k + "," + v));
 
-
     }
 
     interface MathOperation {
@@ -62,6 +61,7 @@ public class LambdaTest {
 
     interface GreetingService {
         void sayMessage(String message);
+        void sayMessage2(String message, String a);
     }
 
 }
