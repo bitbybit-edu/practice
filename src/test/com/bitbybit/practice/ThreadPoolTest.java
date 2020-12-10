@@ -50,11 +50,17 @@ public class ThreadPoolTest {
         }
 
         @Override
-        public Long call() throws Exception {
+        public Long call() {
             while (total > 0) {
+                Random random = new Random();
+                long l = random.nextInt(500);
+                try {
+                    Thread.sleep(l);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 total--;
-                Thread.sleep(500L);
-                System.out.println("thread name : " + Thread.currentThread().getName() + "--- total : " + total);
+                System.out.println("random : " + l + "---thread name : " + Thread.currentThread().getName() + "--- total : " + total);
             }
             return total;
         }
