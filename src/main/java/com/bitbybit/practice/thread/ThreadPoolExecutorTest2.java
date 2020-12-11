@@ -5,11 +5,11 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class ThreadPoolExecutorTest2 {
+
     public static void main(String[] args) throws ExecutionException, InterruptedException {
         ThreadFactoryImpl threadFactory = new ThreadFactoryImpl("test");
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(1 << 1, 1 << 4, 5, TimeUnit.SECONDS,
                 new ArrayBlockingQueue<>(1 << 1), threadFactory, new ThreadPoolExecutor.CallerRunsPolicy());
-
 
         CallableImpl callable = new CallableImpl(100L);
         Future<Long> submit1 = threadPoolExecutor.submit(callable);
@@ -39,7 +39,8 @@ public class ThreadPoolExecutorTest2 {
         System.out.println(submit6.get());
         System.out.println(submit7.get());
         System.out.println(submit8.get());
-
+        System.out.println(submit9.get());
+        System.out.println(submit10.get());
         try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {
@@ -47,70 +48,71 @@ public class ThreadPoolExecutorTest2 {
         }
         threadPoolExecutor.shutdown();
     }
+}
 
-    static class DaemonRunnable implements Runnable {
-        private ThreadPoolExecutor threadPoolExecutor;
+class DaemonRunnable implements Runnable {
+    private ThreadPoolExecutor threadPoolExecutor;
 
-        public DaemonRunnable(ThreadPoolExecutor threadPoolExecutor) {
-            this.threadPoolExecutor = threadPoolExecutor;
-        }
-
-        @Override
-        public void run() {
-            while (true) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                int activeCount = threadPoolExecutor.getActiveCount();
-                long taskCount = threadPoolExecutor.getTaskCount();
-                long completedTaskCount = threadPoolExecutor.getCompletedTaskCount();
-                System.out.println("activeCount : " + activeCount + "---taskCount : " + taskCount + "---completedTaskCount : " + completedTaskCount);
-            }
-
-        }
+    public DaemonRunnable(ThreadPoolExecutor threadPoolExecutor) {
+        this.threadPoolExecutor = threadPoolExecutor;
     }
 
-    static class CallableImpl implements Callable<Long> {
-        private Long total;
-
-        CallableImpl(Long total) {
-            this.total = total;
-        }
-
-        @Override
-        public Long call() {
-            while (total > 0) {
-                Random random = new Random();
-                long l = random.nextInt(2000);
-                try {
-                    Thread.sleep(l);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                total--;
-                System.out.println("random : " + l + "---thread name : " + Thread.currentThread().getName() + "--- total : " + total);
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
-            return total;
-        }
-    }
-
-    static class ThreadFactoryImpl implements ThreadFactory {
-
-        private String poolName;
-
-        AtomicLong num = new AtomicLong();
-
-        public ThreadFactoryImpl(String poolName) {
-            this.poolName = poolName;
+            int activeCount = threadPoolExecutor.getActiveCount();
+            long taskCount = threadPoolExecutor.getTaskCount();
+            long completedTaskCount = threadPoolExecutor.getCompletedTaskCount();
+            System.out.println("activeCount : " + activeCount + "---taskCount : " + taskCount + "---completedTaskCount : " + completedTaskCount);
         }
 
-        @Override
-        public Thread newThread(Runnable r) {
-            Thread thread = new Thread(r);
-            thread.setName(poolName + "-" + String.valueOf(num.getAndIncrement()));
-            return thread;
-        }
     }
 }
+
+class CallableImpl implements Callable<Long> {
+    private Long total;
+
+    CallableImpl(Long total) {
+        this.total = total;
+    }
+
+    @Override
+    public Long call() {
+        while (total > 0) {
+            Random random = new Random();
+            long l = random.nextInt(2000);
+            try {
+                Thread.sleep(l);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            total--;
+            System.out.println("random : " + l + "---thread name : " + Thread.currentThread().getName() + "--- total : " + total);
+        }
+        return total;
+    }
+}
+
+class ThreadFactoryImpl implements ThreadFactory {
+
+    private String poolName;
+
+    AtomicLong num = new AtomicLong();
+
+    public ThreadFactoryImpl(String poolName) {
+        this.poolName = poolName;
+    }
+
+    @Override
+    public Thread newThread(Runnable r) {
+        Thread thread = new Thread(r);
+        thread.setName(poolName + "-" + String.valueOf(num.getAndIncrement()));
+        return thread;
+    }
+}
+
