@@ -24,7 +24,8 @@ public class Java8Test {
     @Test
     public void test2() {
         LocalDateTime localDateTime = LocalDateTime.now();
-        LocalDateTime localDateTime1 = localDateTime.minusDays(30);
+        LocalDateTime localDateTime1 = localDateTime.minusMonths(6L);
+
         String format = localDateTime1.format(DateTimeFormatter.ofPattern("yyyy-MM-dd hh:mm:ss:SSS"));
         System.out.println(format);
     }
