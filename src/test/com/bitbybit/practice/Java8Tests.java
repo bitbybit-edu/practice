@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
-public class Java8Test {
+public class Java8Tests {
 
     @Test
     public void test1() {
