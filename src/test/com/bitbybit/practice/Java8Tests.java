@@ -1,10 +1,15 @@
 package com.bitbybit.practice;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.BinaryOperator;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class Java8Tests {
 
@@ -60,5 +65,24 @@ public class Java8Tests {
         System.out.println(format4);
     }
 
+
+    @Test
+    public void test5() {
+        Consumer<String> con = (x) -> System.out.println(x);
+        con.accept("有一个参数，无返回值的用法（Consumer函数式接口）");
+
+    }
+
+    @Test
+    public void test6() {
+        BinaryOperator<Integer> binary = (x, y) -> x + y;
+        System.out.println(binary.apply(1, 2));
+    }
+
+    @Test
+    public void test7() {
+        Supplier<List> supplier = ArrayList::new;
+        System.out.println(supplier.get());
+    }
 
 }
