@@ -58,16 +58,23 @@
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/junit/junit -->
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter</artifactId>
-			<scope>test</scope>
-		</dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!--        rocketmq-->
+        <dependency>
+            <groupId>org.apache.rocketmq</groupId>
+            <artifactId>rocketmq-client</artifactId>
+            <version>4.3.0</version>
+        </dependency>
 
     </dependencies>
 
     <dependencyManagement>
-		<dependencies>
+        <dependencies>
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
@@ -75,8 +82,8 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-		</dependencies>
-	</dependencyManagement>
+        </dependencies>
+    </dependencyManagement>
 
     <repositories>
         <repository>
@@ -126,29 +133,29 @@
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
-<!--                            <classpathPrefix>lib/</classpathPrefix>-->
+                            <!--                            <classpathPrefix>lib/</classpathPrefix>-->
                             <mainClass>com.bitbybit.practice.thread.ThreadPoolExecutorTest2</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-dependency-plugin</artifactId>-->
-<!--                <version>2.10</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>copy-dependencies</id>-->
-<!--                        <phase>package</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>copy-dependencies</goal>-->
-<!--                        </goals>-->
-<!--                        <configuration>-->
-<!--                            <outputDirectory>${project.build.directory}/lib</outputDirectory>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.maven.plugins</groupId>-->
+            <!--                <artifactId>maven-dependency-plugin</artifactId>-->
+            <!--                <version>2.10</version>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <id>copy-dependencies</id>-->
+            <!--                        <phase>package</phase>-->
+            <!--                        <goals>-->
+            <!--                            <goal>copy-dependencies</goal>-->
+            <!--                        </goals>-->
+            <!--                        <configuration>-->
+            <!--                            <outputDirectory>${project.build.directory}/lib</outputDirectory>-->
+            <!--                        </configuration>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--            </plugin>-->
             <!--        打包插件结束-->
         </plugins>
     </build>
