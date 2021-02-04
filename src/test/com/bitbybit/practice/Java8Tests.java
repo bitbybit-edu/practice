@@ -6,9 +6,11 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class Java8Tests {
@@ -68,7 +70,7 @@ public class Java8Tests {
 
     @Test
     public void test5() {
-        Consumer<String> con = (x) -> System.out.println(x);
+        Consumer<String> con = System.out::println;
         con.accept("有一个参数，无返回值的用法（Consumer函数式接口）");
 
     }
@@ -83,6 +85,83 @@ public class Java8Tests {
     public void test7() {
         Supplier<List> supplier = ArrayList::new;
         System.out.println(supplier.get());
+    }
+
+    @Test
+    public void test8() {
+        Comparator<Integer> bb = Integer::compare;
+        System.out.println(bb.compare(3, 2));
+        Comparator<Integer> cc = (x, y) -> Integer.compare(x, y);
+        System.out.println(cc.compare(3, 2));
+
+        Comparator<Integer> dd = (x, y) -> x.compareTo(y);
+        System.out.println(dd.compare(3, 2));
+        Comparator<Integer> ee = Integer::compareTo;
+        System.out.println(ee.compare(3, 2));
+
+        // 一个参数
+        Function<String, Emp> fun = address -> new Emp(address);
+        Function<String, Emp> fun1 = Emp::new;
+        System.out.println(fun1.apply("beijing"));
+
+    }
+
+    static class Emp {
+        private String address;
+
+        private String name;
+
+        private Integer age;
+
+        public Emp() {
+
+        }
+
+        public Emp(String address) {
+            this.address = address;
+        }
+
+        public Emp(String name, Integer age) {
+            this.name = name;
+            this.age = age;
+        }
+
+        public Emp(String address, String name, Integer age) {
+            super();
+            this.address = address;
+            this.name = name;
+            this.age = age;
+        }
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public Integer getAge() {
+            return age;
+        }
+
+        public void setAge(Integer age) {
+            this.age = age;
+        }
+
+        @Override
+        public String toString() {
+            return "Emp [address=" + address + ", name=" + name + ", age=" + age + "]";
+        }
+
     }
 
 }
