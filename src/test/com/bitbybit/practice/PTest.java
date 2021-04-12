@@ -19,7 +19,7 @@ public class PTest {
     private static void possionTest() {
         double hky = 2.363636364;//主队主场进球期望值
         double aky = 0.516129032;//客队客场进球期望值
-        int k = 11;//个数 0 -- 6  7个
+        int k = 11;//个数 0 -- 10  7个
         LinkedList<Double> hky_expiList = new LinkedList<Double>();
         LinkedList<Double> aky_expiList = new LinkedList<Double>();
         for (int i = 0; i <= k; i++) {
