@@ -5,7 +5,11 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -52,6 +56,56 @@ public class ReferTest {
         BigDecimal bigDecimal = BigDecimal.valueOf(0.9).setScale(2, RoundingMode.HALF_UP);
         System.out.println(bigDecimal.toPlainString());
     }
+
+    @Test
+    public  void test4() {
+        List.of(1,2,3).forEach(integer -> {
+            if (integer == 2) {
+                System.out.println("find 2");
+                return;
+            }
+            System.out.println(integer);
+        });
+    }
+
+
+
+    @Test
+    public  void test5() {
+        System.out.println(BigDecimal.valueOf(100000L).divide(BigDecimal.valueOf(0.33F), 16, RoundingMode.HALF_UP).longValue());
+    }
+
+    @Test
+    public  void test6() {
+        System.out.println(BigDecimal.valueOf(1.0000D).compareTo(BigDecimal.ONE) == 0);
+    }
+
+    @Test
+    public  void test7() {
+        String a = "sr:match:25061974/uof:1/sr:sport:1/1";
+        String replace = a.replace("uof:1", "uof:3");
+        System.out.println(replace);
+    }
+
+    @Test
+    public  void test8() {
+        String a = "-a";
+        String[] split = a.split("-");
+        System.out.println(split);
+    }
+
+    @Test
+    public  void test9() {
+        LocalDate localDate = LocalDate.of(2020, 11, 14);
+        LocalDate localDateNow = LocalDate.now();
+        long until = localDate.until(localDateNow, ChronoUnit.DAYS);
+        System.out.println(until);
+
+        long l = until / 7;
+        long l1 = until % 7;
+        System.out.println(l + ":" +l1);
+    }
+
 
 }
 
