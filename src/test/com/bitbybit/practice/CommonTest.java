@@ -28,4 +28,10 @@ public class CommonTest {
         long seasonStartTime = now- 110 * 60 * 1000;
         log.info(":{}",seasonStartTime);
     }
+
+    @Test
+    public void test3() {
+        int hashCode = "sr:match:27957882".hashCode();
+        log.info("{}", Math.abs(hashCode) % 24);
+    }
 }
