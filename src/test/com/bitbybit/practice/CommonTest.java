@@ -32,8 +32,8 @@ public class CommonTest {
 
     @Test
     public void test3() {
-        int hashCode = "sr:match:27957882".hashCode();
-        log.info("{}", Math.abs(hashCode) % 24);
+        int hashCode = "sr:match:27743910".hashCode();
+        log.info("{}", Math.abs(hashCode % 24) );
     }
 
     @Test
