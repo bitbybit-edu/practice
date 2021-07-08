@@ -13,29 +13,29 @@ public class SpringFrameworkTest {
     @Test
     public void test1() {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(ConfigA.class);
-        BeanA beanA = applicationContext.getBean("beanA", BeanA.class);
-        log.info(beanA.getName());
+        BeanSimple beanSimple = applicationContext.getBean("beanSimple", BeanSimple.class);
+        log.info(beanSimple.getName());
     }
 
     @Test
     public void test2() {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(ConfigAndImportResource.class);
-        BeanA beanA = applicationContext.getBean("beanA", BeanA.class);
-        log.info(beanA.getName());
+        BeanSimple beanSimple = applicationContext.getBean("beanSimple", BeanSimple.class);
+        log.info(beanSimple.getName());
 
-        BeanA configAndImportResourceBeanA = applicationContext.getBean("configAndImportResourceBeanA", BeanA.class);
-        log.info(configAndImportResourceBeanA.getName());
+        BeanSimple configAndImportResourceBeanSimple = applicationContext.getBean("configAndImportResourceBeanSimple", BeanSimple.class);
+        log.info(configAndImportResourceBeanSimple.getName());
 
-        BeanA resourceBeanA = applicationContext.getBean("resourceBeanA", BeanA.class);
-        log.info(resourceBeanA.getName());
+        BeanSimple resourceBeanSimple = applicationContext.getBean("resourceBeanSimple", BeanSimple.class);
+        log.info(resourceBeanSimple.getName());
     }
 
     @Configuration
     public static class ConfigA {
 
         @Bean
-        public BeanA beanA() {
-            return new BeanA();
+        public BeanSimple BeanSimple() {
+            return new BeanSimple();
         }
 
     }
@@ -47,21 +47,22 @@ public class SpringFrameworkTest {
         @Value("${log4j.rootLogger}")
         private String rootLogger;
 
-        @Bean("configAndImportResourceBeanA")
-        public BeanA beanA() {
-            BeanA beanA = new BeanA();
-            beanA.setName(rootLogger);
-            return beanA;
+        @Bean("configAndImportResourceBeanSimple")
+        public BeanSimple BeanSimple() {
+            BeanSimple beanSimple = new BeanSimple();
+            beanSimple.setName(rootLogger);
+            return beanSimple;
         }
 
     }
 
+    public static class BeanSimple {
+        public BeanSimple() {
+            this.name = "beanSimple";
+        }
 
-
-
-    public static class BeanA {
-        public BeanA() {
-            this.name = "beanA";
+        public BeanSimple(String name) {
+            this.name = name;
         }
 
         private String name;
@@ -74,5 +75,47 @@ public class SpringFrameworkTest {
             this.name = name;
         }
     }
+
+
+    @Configuration
+    public static class ConfigProfile {
+
+        public static final String DEVELOPMENT = "development";
+        public static final String BEAN_PROFILE_DEVELOPMENT = "beanProfileDevelopment";
+
+        public static final String PRODUCTION = "production";
+        public static final String BEAN_PROFILE_PRODUCTION = "beanProfileProduction";
+
+        @Bean(BEAN_PROFILE_DEVELOPMENT)
+        @Profile(DEVELOPMENT)
+        public BeanSimple beanSimpleDevelopment() {
+            BeanSimple beanSimple = new BeanSimple(BEAN_PROFILE_DEVELOPMENT);
+            return beanSimple;
+        }
+
+        @Bean(BEAN_PROFILE_PRODUCTION)
+        @Profile(PRODUCTION)
+        public BeanSimple beanSimpleProduction() {
+            BeanSimple beanSimple = new BeanSimple(BEAN_PROFILE_PRODUCTION);
+            return beanSimple;
+        }
+    }
+
+
+    @Test
+    public void test3() {
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+        applicationContext.getEnvironment().setActiveProfiles(ConfigProfile.DEVELOPMENT);
+        applicationContext.register(ConfigProfile.class);
+        applicationContext.refresh();
+
+        BeanSimple beanSimple = applicationContext.getBean(ConfigProfile.BEAN_PROFILE_DEVELOPMENT, BeanSimple.class);
+        log.info(beanSimple.getName());
+
+        BeanSimple beanProfileProduction = applicationContext.getBean(ConfigProfile.BEAN_PROFILE_PRODUCTION, BeanSimple.class);
+        log.info("{}", beanProfileProduction);
+
+    }
+
 
 }

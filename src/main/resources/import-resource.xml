@@ -7,7 +7,7 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
     <context:property-placeholder location="log4j.properties"/>
-    <bean id="resourceBeanA" class="com.bitbybit.practice.SpringFrameworkTest.BeanA">
+    <bean id="resourceBeanSimple" class="com.bitbybit.practice.SpringFrameworkTest.BeanSimple">
         <property name="name" value="resourceBeanAName"/>
     </bean>
 </beans>

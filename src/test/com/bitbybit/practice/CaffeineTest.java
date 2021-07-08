@@ -7,10 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 
@@ -41,6 +38,9 @@ public class CaffeineTest {
         log.info("cacheKey:1={}",integer1);
         Assert.isTrue(Objects.equals(integer1, 1), "key:1");
         Assert.isTrue(Objects.equals(result.get("1"), 2), "key:1");
+
+        Integer integer6 = cache.get("6", result::get);
+        log.info("cacheKey:6={}",integer6);
 
         TimeUnit.MINUTES.sleep(2);
         Integer integer2 = cache.get("1", result::get);
