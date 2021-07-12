@@ -1,7 +1,7 @@
 package com.bitbybit.practice.aliyun;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
 
@@ -14,7 +14,7 @@ import java.util.Arrays;
  * @author liulin
  */
 public class FightMonster {
-    public static final Logger logger = LoggerFactory.getLogger(FightMonster.class);
+    public static final Logger logger = LogManager.getLogger(FightMonster.class);
 
     public static void main(String[] args) {
         int solution = solution(98, 56, 9);

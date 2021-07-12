@@ -1,7 +1,7 @@
 package com.bitbybit.practice.thread;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Random;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -119,7 +119,7 @@ public class ReentrantLockTest {
  */
 class ResourceCompete {
 
-    private static final Logger logger = LoggerFactory.getLogger(ResourceCompete.class);
+    private static final Logger logger = LogManager.getLogger(ResourceCompete.class);
 
     Lock lock = new ReentrantLock();
 
@@ -145,7 +145,7 @@ class ResourceCompete {
 
 class ResourceCompeteLock {
 
-    private static final Logger logger = LoggerFactory.getLogger(ResourceCompeteLock.class);
+    private static final Logger logger = LogManager.getLogger(ResourceCompeteLock.class);
 
     ReentrantLock lock = new ReentrantLock();
 
@@ -194,7 +194,7 @@ class ResourceCompeteLock {
 
 class ResourceTryLock {
 
-    private static final Logger logger = LoggerFactory.getLogger(ResourceTryLock.class);
+    private static final Logger logger = LogManager.getLogger(ResourceTryLock.class);
 
     ReentrantLock reentrantLock = new ReentrantLock();
 

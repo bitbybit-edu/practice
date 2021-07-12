@@ -1,15 +1,17 @@
 package com.bitbybit.practice;
 
 import com.bitbybit.practice.spi.Sound;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+
+import java.time.LocalDateTime;
 import java.util.ServiceLoader;
 
 public class CommonTest {
 
-    private static final Logger log = LoggerFactory.getLogger(CommonTest.class);
+    private static final Logger log = LogManager.getLogger(CommonTest.class);
 
     @Test
     public void test1() {
@@ -40,5 +42,12 @@ public class CommonTest {
     public void test4() {
         ServiceLoader<Sound> loads = ServiceLoader.load(Sound.class);
         loads.forEach(load -> System.out.println(load.sound()));
+    }
+
+    @Test
+    public void test5() {
+        LocalDateTime now = LocalDateTime.now();
+        int dayOfYear = now.getDayOfYear();
+        log.info("{}", dayOfYear);
     }
 }

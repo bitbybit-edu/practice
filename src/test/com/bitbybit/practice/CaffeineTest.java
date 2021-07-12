@@ -2,9 +2,9 @@ package com.bitbybit.practice;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.util.Assert;
 
 import java.util.*;
@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 public class CaffeineTest {
 
-    private static final Logger log = LoggerFactory.getLogger(CaffeineTest.class);
+    private static final Logger log = LogManager.getLogger(CaffeineTest.class);
 
     private Cache<String, Integer> cache = Caffeine.newBuilder().expireAfterWrite(1, TimeUnit.MINUTES).build();
 

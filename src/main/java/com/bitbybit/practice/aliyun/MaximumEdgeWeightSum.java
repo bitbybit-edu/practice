@@ -1,7 +1,7 @@
 package com.bitbybit.practice.aliyun;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Arrays;
 
@@ -15,7 +15,7 @@ import java.util.Arrays;
  */
 public class MaximumEdgeWeightSum {
 
-    private static final Logger logger = LoggerFactory.getLogger(MaximumEdgeWeightSum.class);
+    private static final Logger logger = LogManager.getLogger(MaximumEdgeWeightSum.class);
 
     public static void main(String[] args) {
         int[] nums = new int[]{388, 416, 902, 992, 216, 316, 142, 356, 864, 706, 328, 136, 320, 564, 82, 950, 700, 238, 106, 58};

@@ -1,7 +1,7 @@
 package com.bitbybit.practice.aliyun;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Tom发现了一种神奇的字符串-斐波那契字符串,定义f[1]=0,f[2]=1,对于所有的i>2都有
@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  */
 public class FibonacciString {
 
-    private static final Logger logger = LoggerFactory.getLogger(FibonacciString.class);
+    private static final Logger logger = LogManager.getLogger(FibonacciString.class);
 
     public static void main(String[] args) {
         solution(25, 1);

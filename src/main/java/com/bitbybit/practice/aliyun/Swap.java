@@ -1,14 +1,14 @@
 package com.bitbybit.practice.aliyun;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * 不开新空间交换两个数
  * @author liulin
  */
 public class Swap {
-    private static final Logger logger = LoggerFactory.getLogger(Swap.class);
+    private static final Logger logger = LogManager.getLogger(Swap.class);
     public static void main(String[] args) {
         int[] array = new int[]{6, 5};
         array[0] = array[0] ^ array[1];

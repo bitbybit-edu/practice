@@ -1,8 +1,8 @@
 package com.bitbybit.practice.reflect;
 
-import com.bitbybit.practice.aliyun.PowerTwo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -10,7 +10,7 @@ import java.lang.reflect.Method;
 
 public class ReflectTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(ReflectTest.class);
+    private static final Logger logger = LogManager.getLogger(ReflectTest.class);
 
     public static void main(String[] args) {
         try {

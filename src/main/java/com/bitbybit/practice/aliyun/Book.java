@@ -1,9 +1,7 @@
 package com.bitbybit.practice.aliyun;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Random;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * https://developer.aliyun.com/coding/41
@@ -17,7 +15,7 @@ import java.util.Random;
  */
 public class Book {
 
-    public static final Logger logger = LoggerFactory.getLogger(Book.class);
+    public static final Logger logger = LogManager.getLogger(Book.class);
 
     public static void main(String[] args) {
         solution("ABABAABABBABABABABBABABBAABBABABB");
