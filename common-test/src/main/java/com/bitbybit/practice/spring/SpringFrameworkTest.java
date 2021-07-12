@@ -1,4 +1,4 @@
-package com.bitbybit.practice;
+package com.bitbybit.practice.spring;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,7 +14,7 @@ public class SpringFrameworkTest {
     public void test1() {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(ConfigA.class);
         BeanSimple beanSimple = applicationContext.getBean("beanSimple", BeanSimple.class);
-        log.info(beanSimple.getName());
+        log.info("{}" , beanSimple.getName());
     }
 
     @Test
@@ -34,7 +34,7 @@ public class SpringFrameworkTest {
     public static class ConfigA {
 
         @Bean
-        public BeanSimple BeanSimple() {
+        public BeanSimple beanSimple() {
             return new BeanSimple();
         }
 
