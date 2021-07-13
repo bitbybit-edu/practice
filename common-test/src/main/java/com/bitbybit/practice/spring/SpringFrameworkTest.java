@@ -2,23 +2,25 @@ package com.bitbybit.practice.spring;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.aspectj.lang.annotation.Aspect;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
+import org.springframework.core.io.Resource;
 
 public class SpringFrameworkTest {
 
     private static final Logger log = LogManager.getLogger(SpringFrameworkTest.class);
 
     @Test
-    public void test1() {
+    public void containerSimpleTest() {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(ConfigA.class);
         BeanSimple beanSimple = applicationContext.getBean("beanSimple", BeanSimple.class);
         log.info("{}" , beanSimple.getName());
     }
 
     @Test
-    public void test2() {
+    public void importResourceTest() {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(ConfigAndImportResource.class);
         BeanSimple beanSimple = applicationContext.getBean("beanSimple", BeanSimple.class);
         log.info(beanSimple.getName());
@@ -103,7 +105,7 @@ public class SpringFrameworkTest {
 
 
     @Test
-    public void test3() {
+    public void profileTest() {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
         applicationContext.getEnvironment().setActiveProfiles(ConfigProfile.DEVELOPMENT);
         applicationContext.register(ConfigProfile.class);
@@ -114,8 +116,42 @@ public class SpringFrameworkTest {
 
         BeanSimple beanProfileProduction = applicationContext.getBean(ConfigProfile.BEAN_PROFILE_PRODUCTION, BeanSimple.class);
         log.info("{}", beanProfileProduction);
-
     }
 
+    @Test
+    public void aspectTest() {
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+        applicationContext.getEnvironment().setActiveProfiles(ConfigProfile.DEVELOPMENT);
+        applicationContext.register(ConfigProfile.class);
+        applicationContext.refresh();
+
+        BeanSimple beanSimple = applicationContext.getBean(ConfigProfile.BEAN_PROFILE_DEVELOPMENT, BeanSimple.class);
+        log.info(beanSimple.getName());
+
+        BeanSimple beanProfileProduction = applicationContext.getBean(ConfigProfile.BEAN_PROFILE_PRODUCTION, BeanSimple.class);
+        log.info("{}", beanProfileProduction);
+    }
+
+    @Configuration
+    @EnableAspectJAutoProxy
+    public static class AspectConfig {
+        @Bean
+        public BeanSimple aspectBeanSimple() {
+            BeanSimple beanSimple = new BeanSimple("aspectBeanSimple");
+            return beanSimple;
+        }
+
+        @Bean
+        public CommonAspect commonAspect() {
+
+            return new CommonAspect();
+        }
+    }
+
+
+    @Aspect
+    public static class CommonAspect {
+
+    }
 
 }
