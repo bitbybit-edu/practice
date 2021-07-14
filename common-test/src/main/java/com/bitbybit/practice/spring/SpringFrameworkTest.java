@@ -2,11 +2,11 @@ package com.bitbybit.practice.spring;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
-import org.springframework.core.io.Resource;
 
 public class SpringFrameworkTest {
 
@@ -16,7 +16,7 @@ public class SpringFrameworkTest {
     public void containerSimpleTest() {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(ConfigA.class);
         BeanSimple beanSimple = applicationContext.getBean("beanSimple", BeanSimple.class);
-        log.info("{}" , beanSimple.getName());
+        log.info("{}", beanSimple.getName());
     }
 
     @Test
@@ -74,6 +74,7 @@ public class SpringFrameworkTest {
         }
 
         public void setName(String name) {
+            log.info("[set name] param:{}", name);
             this.name = name;
         }
     }
@@ -120,37 +121,68 @@ public class SpringFrameworkTest {
 
     @Test
     public void aspectTest() {
-        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
-        applicationContext.getEnvironment().setActiveProfiles(ConfigProfile.DEVELOPMENT);
-        applicationContext.register(ConfigProfile.class);
-        applicationContext.refresh();
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(AspectConfig.class);
+        BeanSimple beanSimple = applicationContext.getBean(AspectConfig.ASPECT_BEAN_SIMPLE, BeanSimple.class);
+        beanSimple.setName(beanSimple.getName() + "1");
 
-        BeanSimple beanSimple = applicationContext.getBean(ConfigProfile.BEAN_PROFILE_DEVELOPMENT, BeanSimple.class);
-        log.info(beanSimple.getName());
-
-        BeanSimple beanProfileProduction = applicationContext.getBean(ConfigProfile.BEAN_PROFILE_PRODUCTION, BeanSimple.class);
-        log.info("{}", beanProfileProduction);
     }
 
     @Configuration
     @EnableAspectJAutoProxy
     public static class AspectConfig {
+
+        public static final String ASPECT_BEAN_SIMPLE = "aspectBeanSimple";
+
         @Bean
         public BeanSimple aspectBeanSimple() {
-            BeanSimple beanSimple = new BeanSimple("aspectBeanSimple");
+            BeanSimple beanSimple = new BeanSimple(ASPECT_BEAN_SIMPLE);
             return beanSimple;
         }
 
         @Bean
-        public CommonAspect commonAspect() {
+        public CommonPointcuts commonPointcuts() {
 
-            return new CommonAspect();
+            return new CommonPointcuts();
         }
     }
 
 
     @Aspect
-    public static class CommonAspect {
+    public static class CommonPointcuts {
+
+        @Pointcut("execution(public void set*(..))")
+        public void pointcutSetMethod() {
+
+        }
+
+        @Pointcut("within(com.bitbybit.practice.spring.SpringFrameworkTest.BeanSimple)")
+        public void targetObjectForPointcutSetMethod() {
+        }
+
+//        @Before("pointcutSetMethod() && targetObjectForPointcutSetMethod()")
+//        public void adviceSetMethodBefore() {
+//            log.info("bean simple set method advice before");
+//        }
+
+//        @After("pointcutSetMethod() && targetObjectForPointcutSetMethod()")
+//        public void adviceSetMethodAfter() {
+//            log.info("bean simple set method advice after");
+//        }
+
+        @Around("pointcutSetMethod() && targetObjectForPointcutSetMethod()")
+        public Object adviceSetMethodAround(ProceedingJoinPoint pjp) throws Throwable {
+            // start stopwatch
+            log.info("bean simple set method advice around before");
+            Object retVal = pjp.proceed();
+            log.info("bean simple set method advice around after");
+            // stop stopwatch
+            return retVal;
+        }
+
+        
+        public void adviceSetMethodAround() {
+            log.info("bean simple set method advice around");
+        }
 
     }
 

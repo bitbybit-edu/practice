@@ -1,11 +1,14 @@
 package com.bitbybit.practice;
 
-import com.bitbybit.practice.spi.Sound;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
+import org.springframework.util.DigestUtils;
 
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.ServiceLoader;
 
@@ -39,15 +42,15 @@ public class CommonTest {
     }
 
     @Test
-    public void test4() {
-        ServiceLoader<Sound> loads = ServiceLoader.load(Sound.class);
-        loads.forEach(load -> System.out.println(load.sound()));
-    }
-
-    @Test
     public void test5() {
         LocalDateTime now = LocalDateTime.now();
         int dayOfYear = now.getDayOfYear();
         log.info("{}", dayOfYear);
+    }
+
+    @Test
+    public void md5Test() throws NoSuchAlgorithmException {
+        String digest = DigestUtils.md5DigestAsHex("hello world!".getBytes(StandardCharsets.UTF_8));
+        log.info("{}", digest);
     }
 }
