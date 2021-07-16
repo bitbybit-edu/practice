@@ -7,6 +7,13 @@
     <artifactId>common-test</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
+    <parent>
+        <groupId>com.bitbybit</groupId>
+        <artifactId>practice</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
@@ -55,12 +62,6 @@
             <groupId>org.apache.rocketmq</groupId>
             <artifactId>rocketmq-client</artifactId>
             <version>4.3.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>5.2.1.RELEASE</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.github.ben-manes.caffeine/caffeine -->
