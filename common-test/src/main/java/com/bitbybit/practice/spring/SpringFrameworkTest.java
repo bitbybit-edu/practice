@@ -1,5 +1,6 @@
 package com.bitbybit.practice.spring;
 
+import com.alibaba.fastjson.JSON;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -174,6 +175,7 @@ public class SpringFrameworkTest {
             // start stopwatch
             log.info("bean simple set method advice around before");
             Object retVal = pjp.proceed();
+            log.info("method:{}, args:{}", pjp.getSignature(), JSON.toJSONString(pjp.getArgs()));;
             log.info("bean simple set method advice around after");
             // stop stopwatch
             return retVal;

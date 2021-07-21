@@ -14,7 +14,7 @@
 	<name>spring-boot-test</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
-<!--		<java.version>11</java.version>-->
+		<bitbybit-autoconfigure.version>1.0.0-SNAPSHOT</bitbybit-autoconfigure.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -26,6 +26,17 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.bitbybit</groupId>
+			<artifactId>bitbybit-autoconfigure</artifactId>
+			<version>${bitbybit-autoconfigure.version}</version>
 		</dependency>
 	</dependencies>
 
